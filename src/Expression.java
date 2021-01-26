@@ -1,12 +1,12 @@
 public class Expression {
-    private int a;
-    private int b;
+    private final int a;
+    private final int b;
     private double result;
-    private char operation;
+    private final char operation;
     private boolean ofRim = false;
 
-    private final static String REGEX = "(((10)|[1-9])[+*-/]((10)|[1-9]))|(((V?I{1,3})|(I?(V|X)))[+*-/]((V?I{1,3})|(I?(V|X))))";
-    private final static String RIM_REGEX = "(V?I{1,3})|(I?(V|X))";
+    private final static String REGEX = "(((10)|[1-9])[+*-/]((10)|[1-9]))|(((V?I{1,3})|(I?[VX]))[+*-/]((V?I{1,3})|(I?[VX])))";
+    private final static String RIM_REGEX = "(V?I{1,3})|(I?[VX])";
 
     Expression(String expression) throws Exception{
         if (expression.matches(REGEX)) {
@@ -28,27 +28,18 @@ public class Expression {
     }
 
     public String getResult() throws Exception{
-        double temp = 0;
         switch (operation) {
-            case('-'):
-                temp = a - b;
-                break;
-            case('+'):
-                temp = a + b;
-            break;
-            case('*'):
-                temp = a * b;
-            break;
-            case('/'):
-                temp = (double) a / b;
-            break;
+            case ('-') -> result = a - b;
+            case ('+') -> result = a + b;
+            case ('*') -> result = a * b;
+            case ('/') -> result = (double) a / b;
         }
 
         if (ofRim) {
-            if (temp % 1 != 0) throw new Exception("Ответ дробное число, невозможно перевести в римские цифры!!!");
-            return RimNumber.getRim((int) temp);
+            if (result % 1 != 0) throw new Exception("Ответ дробное число, невозможно перевести в римские цифры!!!");
+            return RimNumber.getRim((int) result);
         }
-        return String.valueOf(temp);
+        return String.valueOf(result);
 
     }
 }
