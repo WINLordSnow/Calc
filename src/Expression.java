@@ -36,7 +36,7 @@ public class Expression {
         }
 
         if (ofRim) {
-            if (result <= 0) throw new Exception("Ответ невозможно перевести в римские цифры!!!");
+            if ((int) result <= 0) throw new Exception("Ответ невозможно перевести в римские цифры!!!");
             return RimNumber.getRim((int) result);
         }
         return String.valueOf(result);
